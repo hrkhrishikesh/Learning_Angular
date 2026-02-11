@@ -1,23 +1,15 @@
 app_id: learning-angular
 name: Learning Angular
 description: Angular learning application
-workspace_binding:
-  service_principal_id: ""
+
 build:
   type: npm
-  command: npm run build
+  command: npm run build -- --configuration production
   working_directory: .
   output_dir: dist/Learning_Angular/browser
-  include_files:
-    - dist/**/*
-  exclude_files:
-    - node_modules/**/*
-    - .git/**/*
-    - src/**/*
-    - .angular/**/*
+
 publish:
   type: static
   paths:
     - source: dist/Learning_Angular/browser
       destination: /
-port: 3000
