@@ -1,0 +1,17 @@
+button{
+    width:80px;
+    height:80px;
+    border-radius: 50%;
+    margin: 10px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+}
+button:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+h1{
+    text-align: center;
+}

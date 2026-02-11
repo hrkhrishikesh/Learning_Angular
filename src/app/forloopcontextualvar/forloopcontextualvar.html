@@ -1,0 +1,28 @@
+<h1><u>For Loop Contextual Variables</u></h1>
+<p>
+    $last = for last index, $index = get index, $first = for first index
+    $even, $odd, $count
+</p>
+<h2>User Names : </h2> <button (click)="toggle()">Show/Hide UserName</button>
+<br>
+@if(display){
+    @for (user of users; track user; let i = $index; let j = $first; let k= $last) {
+    Index => {{i}} , First Index ? => {{j}} , Last Index ? => {{k}}, 
+    @if($even){
+        <h3 style="color: lightgrey;">{{user}}</h3>
+    }
+    @else{
+        <h3 style="color: grey;">{{user}}</h3>
+    }
+}
+}
+
+
+<h2>Two Way Binding</h2>
+<input placeholder="Enter Name" [(ngModel)]="name" type="text">
+<h2>{{name}}</h2>
+Same thing different way ->
+<input placeholder="Enter Name" (input)='changeName($event)' type="text">
+<h2>{{name2}}</h2>
+
+

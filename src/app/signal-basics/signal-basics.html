@@ -1,0 +1,24 @@
+<h1 style="text-align: center;">SIGNAL BASICS</h1>
+<h2 style="margin: 10px;">
+    Value : 
+    {{count()}}
+</h2>
+
+
+<button style="margin: 10px;" (click)="updateValue()">Update Value</button>
+<button style="margin: 10px;" (click)="count.set(100)">Set value to 100</button>
+
+<h3>Whenever the value is changed the effect is shown in console.</h3>
+
+<h2><u>Computed Signals</u></h2> The value of z changes automatically
+<h3>X = {{x()}}, Y = {{y()}},
+Z = {{z()}}
+</h3>
+<button (click)="showValue()">Show Value</button>
+
+<h2>Understanding Effect</h2>
+<h3>{{userName()}}</h3>
+<button (click)="userName.set('New Name')">Update Username</button>
+
+<h2>API POST Call</h2>
+<button (click)="sendPostRequest()">Send POST Request</button>

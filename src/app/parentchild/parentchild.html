@@ -1,0 +1,29 @@
+<h1>Parent Component ---- </h1>
+<p>Input is used by the child component to recieve props</p>
+<hr>
+<app-child [user]="userName" city="Jsr"/>
+
+
+<select #selectedUser (change)="onChange(selectedUser.value)" name="" id="">
+    <option value="alice">Alice</option>
+    <option value="bob">Bob</option>
+    <option value="charlie">Charlie</option>
+    <option value="diana">Diana</option>    
+</select>
+
+
+<h1>Reusing Components</h1>
+@for (user of users; track $index) {
+    <app-child [user]="user"></app-child>
+}
+
+
+<app-child (getGames)="handleGames($event)"></app-child>
+<hr>
+<h2>Passing data from child to parent</h2>
+<p>Using Output </p>
+
+<h3><u>Games list : </u></h3>
+@for (game of games; track $index) {
+    <li>{{game}}</li>
+}

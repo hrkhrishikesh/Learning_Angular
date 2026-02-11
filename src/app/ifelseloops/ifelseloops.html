@@ -1,0 +1,48 @@
+<h1>If Else || Control Flow</h1>
+
+<div style="display: flex; gap: 20px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 300px;">
+    @if (display) {
+        <div style="background-color: green; width: 20%; height: 100px; margin:50px"></div>
+        }
+
+        <button (click)="hide()">Hide/Show Div</button>
+    </div>
+    <div style="flex: 1; min-width: 300px;">
+    <h1>Else If Multiple</h1>
+        @if(color==1){
+        <div style="background-color: red; width: 20%; height: 100px; margin:5px"></div>
+        }
+        @else if(color==2){
+        <div style="background-color: blue; width: 20%; height: 100px; margin:5px"></div>
+        }
+        @else if(color==3){
+        <div style="background-color: green; width: 20%; height: 100px; margin:5px"></div>
+        }
+        @else{
+        <div style="background-color: yellow; width: 20%; height: 100px; margin:5px"></div>
+        }
+
+        <div style="margin: 20px 0;">
+            <button (click)="changeToRed()"
+                style="background-color: red; color: white; margin: 5px; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;">Red</button>
+            <button (click)="changeToBlue()"
+                style="background-color: blue; color: white; margin: 5px; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;">Blue</button>
+            <button (click)="changeToGreen()"
+                style="background-color: green; color: white; margin: 5px; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;">Green</button>
+            <button (click)="changeToYellow()"
+                style="background-color: yellow; color: black; margin: 5px; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;">Yellow</button>
+        </div>
+
+        <input type="text" placeholder="Enter Color No" (input)="handleInput($event)">
+    </div>
+    <div style="flex: 1; min-width: 300px;">
+        <h2>FOR LOOPS : </h2>
+        <ul>
+            @for (user of users; track $index) {
+            <li>{{user}}</li>
+            }
+        </ul>
+    </div>
+</div>
+
