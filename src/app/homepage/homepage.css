@@ -10,3 +10,17 @@
     body {
         background-color: #f8f9fa;
     }
+
+    .user-details {
+        margin: 1rem 0;
+        padding: 1rem;
+        border: 1px solid #d2deea;
+        border-radius: 8px;
+        background-color: #ffffff;
+        max-width: 520px;
+    }
+
+    .user-details h2 {
+        margin-top: 0;
+        color: #1f4f75;
+    }

@@ -11,9 +11,11 @@ import { Formcontrols } from './formcontrols/formcontrols';
 import { Parentchild } from './parentchild/parentchild';
 import { Pipes } from './pipes/pipes';
 import { ApiCalls } from './api-calls/api-calls';
+import { Login } from './login/login';
 
 export const routes: Routes = [
     { path: '', component: Homepage},
+    { path: 'login', component: Login },
     { path: 'counter', component: Counter },
     { path: 'forLoop', component: Forloopcontextualvar },
     { path: 'getset', component: Getsetinputfield },

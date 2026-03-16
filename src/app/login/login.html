@@ -1,0 +1,22 @@
+<section class="login-shell">
+  <div class="login-card">
+    <p class="tag">MSAL Login Demo</p>
+    <h1>Sign in with Microsoft</h1>
+    <p class="subtitle">Simple redirect-based authentication without using MSAL guards.</p>
+
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+
+    @if (!isLoggedIn()) {
+      <button type="button" class="primary" (click)="login()" [disabled]="!isInitialized()">
+        {{ isInitialized() ? 'Login with Microsoft (Redirect)' : 'Preparing MSAL...' }}
+      </button>
+    } @else {
+      <p class="welcome">Welcome, <strong>{{ currentUserName() }}</strong></p>
+      <button type="button" class="secondary" (click)="logout()">Logout</button>
+    }
+
+    <p class="hint">Update your client ID in <code>src/app/msal.config.ts</code> before production use.</p>
+  </div>
+</section>
