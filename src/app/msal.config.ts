@@ -1,4 +1,5 @@
-import { BrowserCacheLocation, PublicClientApplication, type Configuration } from '@azure/msal-browser';
+import { BrowserCacheLocation, InteractionType, PublicClientApplication, type Configuration } from '@azure/msal-browser';
+import type { MsalInterceptorConfiguration } from '@azure/msal-angular';
 
 const msalConfig: Configuration = {
   auth: {
@@ -14,4 +15,18 @@ const msalConfig: Configuration = {
 
 export function createMsalInstance(): PublicClientApplication {
   return new PublicClientApplication(msalConfig);
+}
+
+export function createMsalInterceptorConfig(): MsalInterceptorConfiguration {
+  const protectedResourceMap = new Map<string, Array<string> | null>();
+
+  // Update these to your protected API endpoint and API scope.
+  const apiScopes = ['api://5cdfaba7-6bc4-485b-9a2f-6675753e7c59/access_as_user'];
+  protectedResourceMap.set('http://localhost:5000/api/*', apiScopes);
+  protectedResourceMap.set('http://localhost:5000/getApi', apiScopes);
+
+  return {
+    interactionType: InteractionType.Redirect,
+    protectedResourceMap
+  };
 }

@@ -1,4 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 import type { AccountInfo } from '@azure/msal-browser';
@@ -11,6 +12,7 @@ import type { AccountInfo } from '@azure/msal-browser';
 })
 export class Homepage implements OnInit {
   private readonly authService = inject(MsalService);
+  private readonly http = inject(HttpClient);
 
   readonly isAuthInitialized = signal(false);
   readonly userName = signal<string | null>(null);
@@ -48,6 +50,17 @@ export class Homepage implements OnInit {
   gotoprofile(){
     //this.router.navigate(['profile'], {queryParams:{name:'HRK'}});
     
+  }
+
+  callGetApi(): void {
+    this.http.get('http://localhost:5000/api/test').subscribe({
+      next: (response) => {
+        console.log('GET /getApi response:', response);
+      },
+      error: (error) => {
+        console.error('GET /getApi failed:', error);
+      }
+    });
   }
 
   private setUserDetailsFromAccount(): void {

@@ -1,0 +1,128 @@
+MSAL App Registration Setup (Angular SPA + Protected API)
+
+Overview
+- Use two App Registrations:
+  1) SPA app (Angular frontend)
+  2) API app (backend resource)
+- SPA signs users in and requests tokens.
+- API validates tokens and scopes.
+
+1) Create SPA App Registration
+1. Open Azure Portal.
+2. Go to Microsoft Entra ID.
+3. Go to App registrations.
+4. Click New registration.
+5. Name: LearningAngular-SPA (or your preferred name).
+6. Supported account types: Single tenant (recommended for your current setup).
+7. Click Register.
+
+2) Configure SPA Authentication
+1. Open the SPA app registration.
+2. Go to Authentication.
+3. Click Add a platform.
+4. Choose Single-page application.
+5. Add Redirect URIs:
+   - http://localhost:4200
+   - Add your production URL later, e.g. https://yourapp.com
+6. Optional Logout URL:
+   - http://localhost:4200
+7. Click Save.
+8. Do not create a client secret for SPA.
+
+3) Create API App Registration
+1. Go back to App registrations.
+2. Click New registration.
+3. Name: LearningAngular-API (or your preferred name).
+4. Supported account types: Single tenant.
+5. Click Register.
+
+4) Expose API Scope
+1. Open the API app registration.
+2. Go to Expose an API.
+3. Click Set next to Application ID URI.
+4. Set value to:
+   - api://<API_APP_CLIENT_ID>
+5. Click Add a scope.
+6. Scope name:
+   - access_as_user
+7. Who can consent:
+   - Admins and users (or Admins only, based on policy)
+8. Fill consent display name and description.
+9. Set scope state to Enabled.
+10. Click Add scope / Save.
+
+5) Pre-authorize SPA in API (Recommended)
+1. In API app, stay in Expose an API.
+2. Under Authorized client applications, click Add a client application.
+3. Enter SPA client ID:
+   - 2283697e-db74-4e49-9643-16307a4aa8d7
+4. Select scope:
+   - access_as_user
+5. Save.
+
+6) Add API Permission in SPA App
+1. Open SPA app registration.
+2. Go to API permissions.
+3. Click Add a permission.
+4. Choose My APIs.
+5. Select your API app registration.
+6. Choose Delegated permissions.
+7. Select scope:
+   - access_as_user
+8. Click Add permissions.
+9. Click Grant admin consent (if you have rights).
+
+7) Angular Config Values (Current Project)
+File: src/app/msal.config.ts
+- auth.clientId = SPA app client ID (already set in your project)
+- auth.authority = tenant authority (already set in your project)
+- auth.redirectUri = "/" (already set in your project)
+
+Interceptor setup in same file
+- protectedResourceMap must use real API URL and real API scope.
+- Replace placeholder example:
+  from: api://YOUR_API_APP_ID/access_as_user
+  to:   api://<API_APP_CLIENT_ID>/access_as_user
+- Keep URL pattern aligned with your backend base URL:
+  e.g. https://localhost:5001/api/*
+
+8) Backend API Validation Requirements
+Your API must validate incoming bearer tokens.
+
+Required checks:
+1. Signature validation (using Entra signing keys)
+2. Issuer (iss) matches your tenant
+3. Audience (aud) matches your API Application ID URI (or expected aud)
+4. Expiry/lifetime validation
+5. Scope/role authorization:
+   - delegated scope should include access_as_user in scp claim
+
+Authority for API validation (tenant-specific):
+- https://login.microsoftonline.com/1bfd608a-dd73-43e1-8bcd-f3ac474edbf2/v2.0
+
+9) CORS on API
+Allow your Angular origin(s), for example:
+- http://localhost:4200
+Also allow Authorization header and required methods.
+
+10) End-to-End Test Checklist
+1. Login from Angular.
+2. Trigger a protected HttpClient API call.
+3. Confirm request has Authorization: Bearer <token>.
+4. Decode token (e.g. jwt.ms) and verify:
+   - iss = your tenant issuer
+   - aud = your API
+   - scp contains access_as_user
+5. API should return 200 for valid token and 401/403 for invalid scope/audience.
+
+Common 401/403 Causes
+- Wrong audience on API side.
+- Placeholder scope still in Angular.
+- Scope not granted/consented in SPA app.
+- API not validating tenant-specific issuer.
+- CORS blocking preflight/headers.
+
+Your Known IDs in Current Setup
+- SPA Client ID: 2283697e-db74-4e49-9643-16307a4aa8d7
+- Tenant ID: 1bfd608a-dd73-43e1-8bcd-f3ac474edbf2
+- TODO: Replace YOUR_API_APP_ID with actual API app client ID.
